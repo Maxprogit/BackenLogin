@@ -13,10 +13,16 @@ app.use(bodyparser.urlencoded({
  app.use(bodyparser.json())
 
  //conexion a BD
-
+const url = `mongodb+srv://maxi:maxi@cluster0.cbdpc9z.mongodb.net/prueba?retryWrites=true&w=majority`
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('conectado a la base de datos')).catch((error) => console.log('Error de conexion ' + error))
  //Importar las rutas
-
+const authRoutes = require('./routes/auth')
  //ruta para el middleware
+app.use('/api/user', authRoutes)
+
 app.get('/', (req, res) => {
     res.json({
         estado: true,
