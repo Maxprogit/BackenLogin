@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const  bodyparser = require('body-parser')
+const cors = require('cors')
 require('dotenv').config()
 
 const app = express()
@@ -11,6 +12,13 @@ app.use(bodyparser.urlencoded({
     extended: false
 }))
  app.use(bodyparser.json())
+
+ const corsOptions = {
+    origin: '*',
+    optionsSuccesStatus: 200
+ }
+
+ app.use(cors(corsOptions))
 
  //conexion a BD
 const url = `mongodb+srv://maxi:maxi@cluster0.cbdpc9z.mongodb.net/prueba?retryWrites=true&w=majority`

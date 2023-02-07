@@ -94,4 +94,45 @@ router.post('/login', async (req, res) => {
     })
 })
 
+router.post('/eraseusers', async (req, res) => {
+    const id = req.body.id
+    try {
+        const erasedUser = await User.findByIdAndRemove({_id: id})
+        if(erasedUser) {
+            res.json ({
+                message: "Usuario borrado",
+                data: erasedUser
+            })
+        } else {
+            res.json ({
+                message: "El usuario no existe en la BD",
+                data: null
+            })
+        }
+    }catch( error ){
+        res.json({
+            message: "Error al borrar",
+            error
+        })
+    }
+})
+
+
+router.get('/getallUsers', async (req, res) => {
+   try{
+    const users = await User.find({});
+    res.json({
+        message: "Usuarios",
+        data: users
+    })
+   } catch (error){
+    res.json({
+        message: "Error error",
+        error
+    })
+
+
+   }
+})
+
 module.exports = router
